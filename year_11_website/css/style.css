@@ -3,6 +3,7 @@ html{
   font-family: Arial, Helvetica, sans-serif;
   margin: 0rem 2rem;
   background-color: #ffffff;
+  background-image: url('../images/bg.avif');
 }
 
 /* Banner image*/
@@ -26,6 +27,15 @@ nav ul{
   top: 0;
   width: 100%;
   text-align: center;
+}
+
+textarea {
+  resize: none;
+  height: 400px;
+  width: 500px;
+  text-align: left;
+  font-size: 30px;
+  margin: 0 0 0px -80px;
 }
 
 /* how the list of pages sits */
@@ -87,6 +97,12 @@ p {
   justify-content: center; 
 }
 
+.get_data{
+  width: 100px;
+  height: 40px;
+}
+
+
 /*Items for all the screenshots and pictures of your stuff*/
 .item{
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -101,4 +117,14 @@ p {
 
 .item img{
   width: 100%;
+}
+
+.the_data_table{
+  align-self: top;
+  padding-top: 20px;
+  background-color: #ffffff;
+}
+
+.get_names{
+  background-color: #FFAF9D;
 }
