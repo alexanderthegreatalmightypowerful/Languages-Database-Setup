@@ -22,8 +22,17 @@ html{
   border-width: thick;
   border-radius: 35px 35px 35px 35px;
   scale: 1300%;
-  margin-top: 10rem;
+  margin-top: 30rem;
   position: relative;
+  z-index: 9998!important;
+}
+
+.guest_in_button{
+  border-width: thick;
+  border-radius: 35px 35px 35px 35px;
+  scale: 300%;
+  margin-top: 10rem;
+  position: absolute;
   z-index: 9998!important;
 }
 
@@ -144,7 +153,6 @@ p {
   text-align: center;
 }
 
-/* Styling for the image container and the items inside it */
 .container{
   display: flex; 
   flex-wrap: wrap; 
@@ -152,9 +160,23 @@ p {
   justify-content: center; 
 }
 
+.button_container{ 
+  flex-wrap: nowrap; 
+
+  
+}
+
 .get_data{
-  width: 100px;
-  height: 40px;
+  width: 810px;
+  height: 80px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: green;
+  border-width: 4px;
+  background-color: rgb(40, 53, 29);
+  font-size: 60px;
+  font-weight: bold;
+  font-style: italic;
 }
 
 
@@ -181,5 +203,13 @@ p {
 }
 
 .get_names{
+  resize: fixed;
+  text-size-adjust: none;
   background-color: #FFAF9D;
+  width: 200px;
+  height: 60px;
+  font-size: xx-large;
+  font-weight: bold;
+  margin-left: 0rem;
+  margin-right: 0rem;
 }

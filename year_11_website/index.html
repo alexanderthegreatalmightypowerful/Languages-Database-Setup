@@ -50,6 +50,9 @@
 
       }
 
+      function guest_in(){
+        document.getElementById('overlay').style.width = 0;}
+
       function key_thingy(event) {
     var x = event.code;
     if(x == "Enter") {
@@ -75,9 +78,12 @@
       
       <input type="password" id="fpassword" onkeypress="key_thingy(event)" name="fpassword" class = "sign_inputs"><br><br>
       <button onclick = "view_password()">view</button>
+      
     </div>
+    <button class = "guest_in_button" onclick = 'guest_in()'>Continue as guest</button>
       <button class = 'sign_in_button' onclick = 'SignIN()'>Sign in! Else u suck</button></center>
     
+    </center>
     </div>
 
     <div class="header">
@@ -104,24 +110,43 @@
             things. 
         </p>  
       </div>  
-      
-      <div class='container'>
+      <center>
+      <div class='button_container'>
         <button class = 'get_names' id = 'id' onclick = "add_remove_data('id')">id</button>
         <button class = 'get_names' id = 'name' onclick = "add_remove_data('name')">names</button>
         <button class = 'get_names' id = 'type' onclick = "add_remove_data('type')">type</button>
         <button class = 'get_names' id = 'release_year' onclick = "add_remove_data('release_year')">year</button>
-
-        <button class = 'get_data' id="submitbutton" onclick="sendData()">submit</button>
       </div>
+      </center>
+      <center>
+      <div class='button_container'>
+        <button class = 'get_names' id = 'functional' onclick = "add_remove_data2('functional')">functional</button>
+        <button class = 'get_names' id = 'scripting' onclick = "add_remove_data2('scripting')">scripting</button>
+        <button class = 'get_names' id = 'compiled' onclick = "add_remove_data2('compiled')">compiled</button>
+        <button class = 'get_names' id = 'block' onclick = "add_remove_data2('block')">block</button>
+        <button onclick = "Select_all()">get all</button>
+      </div>
+    </center>
+
+    <center><button class = 'get_data' id="submitbutton" onclick="sendData()">submit</button></center>
+    
+        
       <div id="output"></div>
 
       <div class='container'>
+        
         <div class='textplain'>
           <textarea rows=10 id="submit_code"></textarea>
-
           <script> 
             var modes = {'id' : false, 'name' : false, 'type' : false, 'release_year' : false};
+            var modes2 = {'scripting' : false, 'compiled' : false, 'functional' : false, 'block' : false};
+            var modes1_string = "";
+            var modes2_string = ""
+            var modes2_string2 = "";
+            var modes2_do = false;
             var total_string = '';
+            var select_all = false;
+
 
 
           document.onkeypress = function (e) {
@@ -142,22 +167,72 @@
                 button.style.background='#FFAF9D'
                 modes[string] = false;
               }
-              total_string = '';
+              modes1_string = '';
               for(var index in modes){
                 console.log(index);
                 if(modes[index] == true){
-                  total_string += index + ',';
+                  modes1_string += 'Languages.' + index + ',';
                 }
               }
-              total_string = total_string.slice(0, -1)
-              if (total_string != ''){
-              total_string = "SELECT " + total_string + ' FROM Languages;';}
-              console.log(total_string);
+              modes1_string = modes1_string.slice(0, -1)
+              total_string = 'beans'
+              //if (modes1_string != ''){
+                //modes1_string = "SELECT " + modes1_string + ' FROM Languages;';}
+              console.log(modes1_string);
             }
+
+            function add_remove_data2(string){
+              //Select Languages.name from Languages Join Type On Type.id = Languages.language_type_id Where Type.name = "scripting";
+              var button = document.getElementById(string);
+              if(modes2[string] == false){
+                button.style.background='#9DFFA8'
+                modes2[string] = true;
+              } else{
+                button.style.background='#FFAF9D'
+                modes2[string] = false;
+              }
+              modes2_string = '';
+              modes2_string2 = ' Join Type on Type.id = Languages.language_type_id Where ';
+              var start = 0;
+              var add = "";
+              for(var index in modes2){
+                console.log(index);
+                if(modes2[index] == true){
+                  modes2_do = true;
+                  if (start > 0){add = " Or ";}
+                  modes2_string += "Type." + index + ',';
+                  modes2_string2 += add + "Type.name == '" + index + "'" 
+                  start += 1;
+                }
+              }
+              if(start == 0){modes2_do = false;}
+              modes2_string = modes2_string.replace(' ', '').slice(0, -1)
+              total_string = 'beans'
+              //if (total_string != ''){
+              //total_string = "SELECT " + total_string + ' FROM Languages;';}
+              console.log(modes2_string);
+            }
+
+            function Select_all(){
+            if(select_all == false){select_all = true;}
+            else{select_all = false;}
+            for(item in modes.keys){add_remove_data(modes[item])}
+            for(item in modes2.keys){add_remove_data(modes2[item])}
+          }
+
+
 
             function sendData() { 
               var value = document.getElementById('submit_code').value; 
               if(document.getElementById('submit_code').value == '' && total_string != ''){
+                total_string = "";
+                var semi = ""
+                if (modes2_string != ""){semi = ", ";}
+                //+ semi + modes2_string
+                if (modes2_do == false){modes2_string2 = "";}
+                if (modes1_string == ""){modes1_string = " * ";}
+
+                total_string = "Select " + modes1_string  + ' From Languages' + modes2_string2 + ";"
                 var value = total_string;
               } 
               if (document.getElementById('submit_code').value == '' && total_string == ''){
