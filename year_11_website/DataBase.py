@@ -21,10 +21,10 @@ import hmac
 
 
 
-app = Flask(__name__)
-CORS(app)
+app = Flask(__name__) #__init__ flask server
+CORS(app) #makes it a cors server
 
-directory = __file__.removesuffix('\\DataBase.py')
+directory = __file__.removesuffix('\\DataBase.py') # dir to databse file
 path = f'{directory}\\DataBase\\CodingLanguages.db'
 print(path)
 connection = sql.connect(database=path, uri=True)
@@ -72,13 +72,13 @@ def get_tabel_data(inp): #function to get data
         print(print_line)
         print(table_rows)
         
-        return {'columns' : columns, 'data' : data, 'rows' : table_rows}
-    except Exception as e:
+        return {'columns' : columns, 'data' : data, 'rows' : table_rows} ## reutrn the data in dict with columns and rows
+    except Exception as e: # if an error, still send something else it will break. we send N/A here
         print(e)
         return {'columns' : ['N/A'], 'data' : 'there is no data', 'rows' : {'N/A':'N/A'}}
 
 
-@app.route('/get_data', methods=['POST'])
+@app.route('/get_data', methods=['POST']) # sets as server decorater
 def get_data(): # request reciever
     print(request.form)
     data = request.form.get('data')
@@ -86,13 +86,12 @@ def get_data(): # request reciever
     #result = data
     new_data = get_tabel_data(data)
     #new_data = {'data' : new_data['data']}
-    return jsonify(new_data)
+    return jsonify(new_data) # return as jason so js can understand
 
 #oauth = OAuth2Session(client_id, redirect_uri=redirect_uri, scope=["openid", "email", "profile"])
-
-
 #hashing_data = {"Thew" : 'alex_smells', "Miguel" : "alex_smells2", "eggyolk" : 'i_dont_smell', "user" : "1234"}
 
+# vars for sign in data
 hashing_usernames = ["Thew", "Miguel", "eggyolk", "user"]
 hashed_data = {}
 hashed_tokens = {}
@@ -134,24 +133,25 @@ from hashed_folder.hashed1 import *
 from hashed_folder.pickled import *
 
 
-def check_data_validation(username, password):
+def check_data_validation(username, password): # password / username checker
     tokens = pickle.loads(hashed_tokens)
     #keys = hashed_keys
     keys = pickle.loads(hashed_keys)
     #print(tokens, keys)
-    for item in keys.keys():
+    for item in keys.keys(): # goes through all usernames
         decoded_username = Fernet(str(keys[item][0])).decrypt(tokens[item][0])
         decoded_username = decoded_username.decode()
         print(decoded_username, username)
-        if hmac.compare_digest(username, decoded_username):
-            decoded_password = Fernet(str(keys[item][1])).decrypt(tokens[item][1])
+        # use this to prevernt timing attacks instead of '=='
+        if hmac.compare_digest(username, decoded_username): # if username matches check if password is same
+            decoded_password = Fernet(str(keys[item][1])).decrypt(tokens[item][1]) # decode toi see password
             decoded_password = decoded_password.decode()
             print(decoded_password)
             if hmac.compare_digest(decoded_password, password):
-                return True
+                return True #matched password
             else:
-                return False
-    return False
+                return False #password not matched
+    return False # d=nothing matched
 
 
 @app.route('/sign_in', methods = ['POST', 'GET'])
@@ -163,10 +163,10 @@ def sign_in():
     pas = request.form.get('Password')
     data = {}
     data['check'] = check_data_validation(name, pas);
-    return jsonify(data)
+    return jsonify(data) # send true is matched, false for not matched ,as json data
 
 
-"""
+""" !OLD CODE!
 while True:
     inp = input('What would you like to see: ')
     try:
@@ -191,6 +191,7 @@ Select Languages.name from Languages
 Join Owner On Owner.id = Languages.owner_id
 Where Owner.name = "Dennis Ritchie";
 """
+#test querries
 #Select Languages.name from Languages Join Owner On Owner.id = Languages.owner_id Where Owner.name = "Dennis Ritchie";
 
 #Select Languages.name from Languages Join Type On Type.id = Languages.language_type_id Where Type.name = "scripting";
@@ -198,6 +199,47 @@ Where Owner.name = "Dennis Ritchie";
 #Select Languages.name, Owner.name from Languages Join Owner On Owner.id = Languages.owner_id Where Owner.name = "Dennis Ritchie";
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug = True) #__init__ flask app to starty running 
+    #no code can run past this point as long as the flask server runs
 
-    #AIzaSyDRtO9uewM5eIvsWzUEBx3O6I3aMhnHLBI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#the void!

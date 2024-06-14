@@ -1,0 +1,215 @@
+/* global styling*/
+html{
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0rem 2rem;
+  background-color: #ffffff;
+  background-image: url('../images/bg.avif');
+}
+
+/* Banner image*/
+.header {
+  width: 100%;
+  background-size: cover;
+}
+
+.header img {
+  width: 100%;
+  z-index: 1;
+}
+
+
+.sign_in_button{
+  border-width: thick;
+  border-radius: 35px 35px 35px 35px;
+  scale: 1300%;
+  margin-top: 30rem;
+  position: relative;
+  z-index: 9998!important;
+}
+
+.guest_in_button{
+  border-width: thick;
+  border-radius: 35px 35px 35px 35px;
+  scale: 300%;
+  margin-top: 10rem;
+  position: absolute;
+  z-index: 9998!important;
+}
+
+
+.sign_inputs{
+  width: 200px;
+  height: 50px;
+  font-size: 30px;
+}
+
+.sign_in_text{
+  color: white;
+  font-weight: bold;
+  font-size: 35px;
+}
+
+
+
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */   
+  height: 100%;
+  width: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 10!important; /* Sit on top */
+  left: 0;
+  top: 0;
+  background-color: rgb(0,0,0); /* Black fallback color */
+  background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  
+}
+
+#signin-button {
+  padding: 5px;
+ }
+
+ #oauth2-results pre { margin: 0; padding:0; width: 600px;}
+ .hide { display: none;}
+ .show { display: block;}
+
+.sign_in{
+  width: 400%;
+  height: 400%;
+  color: blue;
+  z-index: 10;
+}
+
+/*the navbar styling goes here*/
+/* nav bar */
+nav ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(0, 0, 0);
+  top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+textarea {
+  resize: none;
+  height: 400px;
+  width: 500px;
+  text-align: left;
+  font-size: 30px;
+  margin: 0 0 0px -80px;
+}
+
+/* how the list of pages sits */
+nav ul li{
+  display: inline-block;
+  font-size: 1rem;
+}
+
+/* the nav text */
+nav li a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav li:hover{
+  background-color: orangered;
+}
+
+nav #active{
+  background-color: darkgreen;
+}
+
+/* Styling for the main section*/
+/* This is the line between the main section and footer */
+main{
+  border-bottom: 3px solid;
+  color: black;
+}
+
+/* H1 uses a google font. Check out https://www.w3schools.com/howto/howto_google_fonts.asp to change - also see line 9 in your html page*/
+h1 {
+  color: darkblue;
+  font-family: 'Caesar Dressing';
+  font-size: 60px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  color: black;
+  font-size: 30px;
+  text-align: center;
+}
+
+p {
+  color: black;
+  font-size: 14px;
+  text-align: center;
+}
+
+.container{
+  display: flex; 
+  flex-wrap: wrap; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.button_container{ 
+  flex-wrap: nowrap; 
+
+  
+}
+
+.get_data{
+  width: 810px;
+  height: 80px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: green;
+  border-width: 4px;
+  background-color: rgb(40, 53, 29);
+  font-size: 60px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+/*Items for all the screenshots and pictures of your stuff*/
+.item{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  width: 20%;
+  min-width: 8rem;
+  margin: 0.5rem;
+}
+ .item-info{
+   padding: 0.1rem;
+   text-align: center;
+ }
+
+.item img{
+  width: 100%;
+}
+
+.the_data_table{
+  align-self: top;
+  padding-top: 20px;
+  background-color: #ffffff;
+}
+
+.get_names{
+  resize: fixed;
+  text-size-adjust: none;
+  background-color: #FFAF9D;
+  width: 200px;
+  height: 60px;
+  font-size: xx-large;
+  font-weight: bold;
+  margin-left: 0rem;
+  margin-right: 0rem;
+}

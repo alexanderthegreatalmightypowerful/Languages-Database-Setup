@@ -1,0 +1,344 @@
+<!---THIS HTML IS MINE-->
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js?onload=renderApp" async defer></script>
+
+    <link rel="stylesheet"
+    href="https://pyscript.net/releases/2023.11.2/core.css" />
+    <script type="module"
+    src="https://pyscript.net/releases/2023.11.2/core.js">
+    </script>
+
+    <script>
+      var view_stuff = false;
+      function view_password(){
+        let pass = document.getElementById("fpassword");
+        if(view_stuff == false){pass.type = 'text'; view_stuff = true;}
+        else{pass.type = 'password'; view_stuff = false;}
+      
+      }
+
+      function SignIN(){
+
+      //const url = 'http://127.0.0.1:5000/sign_in'; 
+      var data = {'Name' : document.getElementById('fuser').value, 'Password' : document.getElementById('fpassword').value}
+      $.ajax({
+                      url: 'http://127.0.0.1:5000/sign_in',
+                      method: 'POST',
+                      data: data,
+                      crossDomain: false,
+                      mode : 'no-cors',
+                      dataType : 'json',
+                    }).done(function (data) {
+                      let check = data['check'];
+                      console.log(check);
+                      if (check == true){
+                        let overlay = document.getElementById('overlay');
+                        overlay.innerHTML = "";
+                        overlay.style.width = 0;
+                        console.log('THIS EMAIL AND ADDRESS / PASSWORD IS TRUE');
+                      }
+
+                    }).fail(function (error) {
+                      alert(error);
+                    });
+                  
+
+      }
+
+      function guest_in(){
+        document.getElementById('overlay').style.width = 0;}
+
+      function key_thingy(event) {
+    var x = event.code;
+    if(x == "Enter") {
+        SignIN();
+    }    
+}
+  </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <title>Great Amazing Coding Language Database</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!-- The relates to the Google Font used in h1 -->
+    <link href='https://fonts.googleapis.com/css?family=Caesar Dressing' rel='stylesheet'>
+    <script src="https://apis.google.com/js/platform.js?onload=renderApp" async defer></script>
+
+    <div id="overlay" class = 'overlay'>
+      <center><label for="fuser" class = "sign_in_text">Username:</label>
+      <input type="text" id="fuser" name="fuser" class = "sign_inputs"><br><br>
+      <div class = "container">
+      <label for="fpassword" class = "sign_in_text">Password:</label>
+      
+      <input type="password" id="fpassword" onkeypress="key_thingy(event)" name="fpassword" class = "sign_inputs"><br><br>
+      <button onclick = "view_password()">view</button>
+      
+    </div>
+    <button class = "guest_in_button" onclick = 'guest_in()'>Continue as guest</button>
+      <button class = 'sign_in_button' onclick = 'SignIN()'>Sign in! Else u suck</button></center>
+    
+    </center>
+    </div>
+
+    <div class="header">
+      <img src="images/title.png">
+    </div>
+  </head>
+  <div class="wrapper">
+    <body>
+      <!-- The Nav Bar goes here -->
+      <nav>
+        <ul>
+          <li id='active'></li>
+        </ul>
+    </nav>
+    <main>
+
+      <!-- page heading- add name here! -->
+      <h1><u>Coding Language Database</u></h1>
+      <h2>Alexander the Great Almighty Powerful, ruler of all and Bestower Of Wisdom</h2>
+      <!-- now the Information text box-->
+      <div class=information>
+        <p>
+            Database <br><br>
+            things. 
+        </p>  
+      </div>  
+      <center>
+      <div class='button_container'>
+        <button class = 'get_names' id = 'id' onclick = "add_remove_data('id')">id</button>
+        <button class = 'get_names' id = 'name' onclick = "add_remove_data('name')">names</button>
+        <button class = 'get_names' id = 'type' onclick = "add_remove_data('type')">type</button>
+        <button class = 'get_names' id = 'release_year' onclick = "add_remove_data('release_year')">year</button>
+      </div>
+      </center>
+      <center>
+      <div class='button_container'>
+        <button class = 'get_names' id = 'functional' onclick = "add_remove_data2('functional')">functional</button>
+        <button class = 'get_names' id = 'scripting' onclick = "add_remove_data2('scripting')">scripting</button>
+        <button class = 'get_names' id = 'compiled' onclick = "add_remove_data2('compiled')">compiled</button>
+        <button class = 'get_names' id = 'block' onclick = "add_remove_data2('block')">block</button>
+        <button onclick = "Select_all()">get all</button>
+      </div>
+      </center>
+      <center> 
+      <div class='button_container'>
+        <button class = 'get_names' id = 'owner' onclick = "add_remove_data3('owner')">owner</button>
+      </div>
+    </center>
+
+    <center><button class = 'get_data' id="submitbutton" onclick="sendData()">submit</button></center>
+    
+        
+      <div id="output"></div>
+
+      <div class='container'>
+        
+        <div class='textplain'>
+          <textarea rows=10 id="submit_code"></textarea>
+          <script> 
+            var modes = {'id' : false, 'name' : false, 'type' : false, 'release_year' : false};
+            var modes2 = {'scripting' : false, 'compiled' : false, 'functional' : false, 'block' : false};
+            var modes3 = false;
+            var modes1_string = "";
+            var modes2_string = "";
+            var modes2_string2 = "";
+            var modes3_string = "";
+            var modes3_string2  = "";
+            var modes2_do = false;
+            var total_string = '';
+            var select_all = true;
+
+
+
+          document.onkeypress = function (e) {
+              e = e || window.event;
+              var string = document.getElementById('submit_code').value;
+              var string = string.toLowerCase();
+              string = string.replace('select ' , '<span style="color: #ff0000">select </span>');
+              document.getElementById('submit_code').innerHTML = string;
+              console.log(string);
+          };
+
+            function add_remove_data(string){
+              var button = document.getElementById(string);
+              if(modes[string] == false){
+                button.style.background='#9DFFA8'
+                modes[string] = true;
+              } else{
+                button.style.background='#FFAF9D'
+                modes[string] = false;
+              }
+              modes1_string = '';
+              for(var index in modes){
+                console.log(index);
+                if(modes[index] == true){
+                  modes1_string += 'Languages.' + index + ',';
+                }
+              }
+              modes1_string = modes1_string.slice(0, -1)
+              total_string = 'beans'
+              //if (modes1_string != ''){
+                //modes1_string = "SELECT " + modes1_string + ' FROM Languages;';}
+              console.log(modes1_string);
+            }
+
+            function add_remove_data2(string){
+              //Select Languages.name from Languages Join Type On Type.id = Languages.language_type_id Where Type.name = "scripting";
+              var button = document.getElementById(string);
+              if(modes2[string] == false){
+                button.style.background='#9DFFA8'
+                modes2[string] = true;
+              } else{
+                button.style.background='#FFAF9D'
+                modes2[string] = false;
+              }
+              modes2_string = '';
+              modes2_string2 = ' Join Type on Type.id = Languages.language_type_id Where ';
+              var start = 0;
+              var add = "";
+              for(var index in modes2){
+                console.log(index);
+                if(modes2[index] == true){
+                  modes2_do = true;
+                  if (start > 0){add = " Or ";}
+                  modes2_string += "Type." + index + ',';
+                  modes2_string2 += add + "Type.name == '" + index + "'" 
+                  start += 1;
+                }
+              }
+              if(start == 0){modes2_do = false;}
+              modes2_string = modes2_string.replace(' ', '').slice(0, -1)
+              total_string = 'beans'
+              //if (total_string != ''){
+              //total_string = "SELECT " + total_string + ' FROM Languages;';}
+              console.log(modes2_string);
+            }
+
+            
+            function add_remove_data3(string){
+              //Select Languages.name from Languages Join Type On Type.id = Languages.language_type_id Where Type.name = "scripting";
+              var button = document.getElementById(string);
+              if(modes3 == false){
+                button.style.background='#9DFFA8'
+                modes3 = true;
+              } else{
+                button.style.background='#FFAF9D'
+                modes3 = false;
+              }
+              modes3_string = '';
+              modes3_string2 = '';
+
+              if(modes3 == true){
+                  modes3_string = " Owner.name " ;
+                  modes3_string2 = ' Join Owner On Owner.id = Languages.owner_id ';
+                }
+
+                total_string = 'beans'
+              //if (total_string != ''){
+              //total_string = "SELECT " + total_string + ' FROM Languages;';}
+              console.log(modes3_string);
+            }
+
+            function Select_all(){
+            if(select_all == false){select_all = true;}
+            else{select_all = false;}
+            for(const [item, value] of Object.entries(modes)){modes[item] = select_all;add_remove_data(item)}
+            for(const [item, value] of Object.entries(modes2)){modes2[item] = select_all;add_remove_data2(item)}
+            modes3 = select_all;
+            add_remove_data3("owner");
+          }
+
+            function sendData() { 
+              var value = document.getElementById('submit_code').value; 
+              if(document.getElementById('submit_code').value == ''){total_string = 'beans';}
+              if(document.getElementById('submit_code').value == '' && total_string != ''){
+                total_string = "";
+                var semi = ""
+                if (modes2_string != ""){semi = ", ";}
+                //+ semi + modes2_string
+                if (modes2_do == false){modes2_string2 = "";}
+                if (modes1_string == ""){modes1_string = " * ";}
+                if (modes1_string == " * " && modes3_string != ''){modes1_string  = ""; }
+                else if(modes1_string != " * " && modes3_string != ''){modes3_string = ", " + modes3_string;}
+                //modes1_string += ', Owner.name '
+                
+
+                total_string = "Select " + modes1_string + modes3_string  + ' From Languages' + modes3_string2 + modes2_string2 + ";"
+                var value = total_string;
+                modes3_string = modes3_string.replace(',', '');
+              } 
+              if (document.getElementById('submit_code').value == '' && total_string == ''){
+                var value = 'Select * FROM Languages;'
+              }
+              if (document.getElementById('submit_code').value != ''){
+                var value = document.getElementById('submit_code').value; 
+              }
+                //var value = document.getElementById('submit_code').value; 
+                console.log('Sending Data: ' + value);
+                const url = 'http://127.0.0.1:5000/get_data'; 
+                var mode = 'POST'; 
+                var data = {'data' : value};
+                var table = document.getElementById('data_table')
+
+                $.ajax({
+                      url: url,
+                      method: mode,
+                      data: data,
+                      crossDomain: false,
+                      mode : 'no-cors',
+                      dataType : 'json',
+                    }).done(function (data) {
+                      //console.log(data['columns']);
+                      //console.log(data['data']);
+                      var table_data = data;
+
+                      var tables = {};
+                      var table_data_holder = [];
+                      var data_string = '<tr>';
+                      for(var column in data['columns']){
+                        data_string += '<th>' + data['columns'][column] + '</th>';
+                        tables[data['columns'][column]] = [];
+                        //console.log(data['columns'][column]);
+                      }
+                      data_string += '</tr>';
+                      //console.log(data['data']);
+                      
+                      for(var item in data['rows']){
+                        data_string += '<tr>';
+                        for(value in data['rows'][item]){
+                          data_string += "<td>" + data['rows'][item][value] +"</td>";
+                          //console.log(data['rows'][item][value]);
+                        }
+                        data_string += '</tr>';
+                      }
+                      
+                      data_string = data_string + '</tr>'
+                      //console.log(data_string);
+
+                      table.innerHTML = data_string;
+                    
+
+                    }).fail(function (error) {
+                      alert(error);
+                    });
+
+            }
+        </script> 
+      </div>
+      <table class = 'the_data_table' id = 'data_table' border = "1px">
+      </table>
+    </main>  
+    <footer>
+      <p>&#169;This is MY website. not yours, mine. - Alexander Krakowiak</p>
+    </footer>
+
+
+  </body>
+</html>

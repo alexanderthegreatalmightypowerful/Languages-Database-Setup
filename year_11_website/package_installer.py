@@ -1,3 +1,5 @@
+"""installs modules for school pcs eles it takes ages"""
+
 import os
 import threading
 
