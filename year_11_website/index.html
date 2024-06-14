@@ -126,6 +126,11 @@
         <button class = 'get_names' id = 'block' onclick = "add_remove_data2('block')">block</button>
         <button onclick = "Select_all()">get all</button>
       </div>
+      </center>
+      <center> 
+      <div class='button_container'>
+        <button class = 'get_names' id = 'owner' onclick = "add_remove_data3('owner')">owner</button>
+      </div>
     </center>
 
     <center><button class = 'get_data' id="submitbutton" onclick="sendData()">submit</button></center>
@@ -140,12 +145,15 @@
           <script> 
             var modes = {'id' : false, 'name' : false, 'type' : false, 'release_year' : false};
             var modes2 = {'scripting' : false, 'compiled' : false, 'functional' : false, 'block' : false};
+            var modes3 = false;
             var modes1_string = "";
-            var modes2_string = ""
+            var modes2_string = "";
             var modes2_string2 = "";
+            var modes3_string = "";
+            var modes3_string2  = "";
             var modes2_do = false;
             var total_string = '';
-            var select_all = false;
+            var select_all = true;
 
 
 
@@ -213,17 +221,43 @@
               console.log(modes2_string);
             }
 
+            
+            function add_remove_data3(string){
+              //Select Languages.name from Languages Join Type On Type.id = Languages.language_type_id Where Type.name = "scripting";
+              var button = document.getElementById(string);
+              if(modes3 == false){
+                button.style.background='#9DFFA8'
+                modes3 = true;
+              } else{
+                button.style.background='#FFAF9D'
+                modes3 = false;
+              }
+              modes3_string = '';
+              modes3_string2 = '';
+
+              if(modes3 == true){
+                  modes3_string = " Owner.name " ;
+                  modes3_string2 = ' Join Owner On Owner.id = Languages.owner_id ';
+                }
+
+                total_string = 'beans'
+              //if (total_string != ''){
+              //total_string = "SELECT " + total_string + ' FROM Languages;';}
+              console.log(modes3_string);
+            }
+
             function Select_all(){
             if(select_all == false){select_all = true;}
             else{select_all = false;}
-            for(item in modes.keys){add_remove_data(modes[item])}
-            for(item in modes2.keys){add_remove_data(modes2[item])}
+            for(const [item, value] of Object.entries(modes)){modes[item] = select_all;add_remove_data(item)}
+            for(const [item, value] of Object.entries(modes2)){modes2[item] = select_all;add_remove_data2(item)}
+            modes3 = select_all;
+            add_remove_data3("owner");
           }
-
-
 
             function sendData() { 
               var value = document.getElementById('submit_code').value; 
+              if(document.getElementById('submit_code').value == ''){total_string = 'beans';}
               if(document.getElementById('submit_code').value == '' && total_string != ''){
                 total_string = "";
                 var semi = ""
@@ -231,9 +265,14 @@
                 //+ semi + modes2_string
                 if (modes2_do == false){modes2_string2 = "";}
                 if (modes1_string == ""){modes1_string = " * ";}
+                if (modes1_string == " * " && modes3_string != ''){modes1_string  = ""; }
+                else if(modes1_string != " * " && modes3_string != ''){modes3_string = ", " + modes3_string;}
+                //modes1_string += ', Owner.name '
+                
 
-                total_string = "Select " + modes1_string  + ' From Languages' + modes2_string2 + ";"
+                total_string = "Select " + modes1_string + modes3_string  + ' From Languages' + modes3_string2 + modes2_string2 + ";"
                 var value = total_string;
+                modes3_string = modes3_string.replace(',', '');
               } 
               if (document.getElementById('submit_code').value == '' && total_string == ''){
                 var value = 'Select * FROM Languages;'
